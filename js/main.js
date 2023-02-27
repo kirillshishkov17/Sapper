@@ -13,13 +13,14 @@ function startGame() {
     const field = document.querySelector('.field');
     field.innerHTML = '<button></button>'.repeat(cellsCount)
     const cells = [...field.children];
+    let openedCount = cellsCount;
 
     // Генерация бомб
     const bombs = [...Array(256).keys()]
         .sort(() => Math.random() - 0.5)
         .slice(0, bombCount);
 
-    // Обработчик события при клике на кнопку
+    // Обработчик события при клике (ЛКМ) на кнопку
     field.addEventListener('click', (event) => {
         const index = cells.indexOf(event.target);
         const column = index % width;
@@ -32,6 +33,19 @@ function startGame() {
 
         // При клике на кнопку
         open(row, column);
+    })
+
+    // Обработчик событий при клике (ПКМ) на кнопку
+    field.addEventListener('contextmenu', (event) => {
+        const index = cells.indexOf(event.target);
+        const column = index % width;
+        const row = Math.floor(index / width);
+
+        // Убирает контекстное меню при нажатии ПКМ
+        if(event.preventDefault != undefined)
+            event.preventDefault();
+
+        flag(row, column);
     })
 
     // Проверка на наличие бомбы в ячейке
@@ -51,6 +65,13 @@ function startGame() {
 
         if (cell.disabled === true) return;
         cell.disabled = true;
+
+        // Условие победы
+        openedCount--;
+        if (openedCount <= bombCount) {
+            alert('Вы победили!')
+            return;
+        }
 
         const count = getCount(row, column);
 
@@ -130,5 +151,12 @@ function startGame() {
             && row < height
             && column >= 0
             && column < width;
+    }
+
+    // Ставит флаг при нажатии ПКМ
+    function flag(row, column) {
+        const index = row * width + column;
+        const cell = cells[index];
+        cell.style.backgroundPosition = '-34px 33px';
     }
 }
