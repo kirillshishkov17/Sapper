@@ -1,0 +1,22 @@
+.field {
+    display: grid;
+    grid-template-columns: repeat(16, 16px);
+}
+
+button {
+    height: 16px;
+    font-size: 10px;
+    background-image: url(../img/sprites.png);
+    background-position: 0 33px;
+    /* background-position: -85px 33px; |бомба| */
+    /* background-position: -17px 33px; |0| */
+    /* background-position: 0px 16px;   |1| */
+    /* background-position: -17px 16px; |2| */
+    /* background-position: -34px 16px; |3| */
+    /* background-position: -51px 16px; |4| */
+    /* background-position: -68px 16px; |5| */
+    /* background-position: -85px 16px; |6| */
+    /* background-position: -102px 16px; |7| */
+    /* background-position: -119px 16px; |8| */
+    border: none;
+} 
