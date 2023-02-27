@@ -42,8 +42,9 @@ function startGame() {
         const row = Math.floor(index / width);
 
         // Убирает контекстное меню при нажатии ПКМ
-        if(event.preventDefault != undefined)
+        if(event.preventDefault != undefined) {
             event.preventDefault();
+        }
 
         flag(row, column);
     })
@@ -157,6 +158,9 @@ function startGame() {
     function flag(row, column) {
         const index = row * width + column;
         const cell = cells[index];
+        
+        if (cell.disabled === true) return;
+        
         cell.style.backgroundPosition = '-34px 33px';
     }
 }
