@@ -42,11 +42,11 @@ function startGame() {
         const row = Math.floor(index / width);
 
         // Убирает контекстное меню при нажатии ПКМ
-        if(event.preventDefault != undefined) {
-            event.preventDefault();
-        }
+        // if(event.preventDefault != undefined) {
+        //     event.preventDefault();
+        // }
 
-        flag(row, column);
+        flag(row, column)
     })
 
     // Проверка на наличие бомбы в ячейке
@@ -76,9 +76,25 @@ function startGame() {
 
         const count = getCount(row, column);
 
+        // Попали на бомбу?
         if (isBomb(row, column)) {
-            cell.style.backgroundPosition = '-85px 33px';
-            alert('Вы проиграли!')
+
+            // Показываем все бомбы на поле
+            for (let i = 0; i < 16; i++) {
+                for (let j = 0; j < 16; j++) {
+                    let index = j * width + i;
+
+                    if (bombs.includes(index)) {
+                        cells[index].style.backgroundPosition = '-85px 33px';
+                        cells[index].disabled = true;
+                    } else {
+                        cells[index].disabled = true;
+                    }
+                }
+            }
+
+            // Красным выделяем ту, на которую нажал пользователь
+            cell.style.backgroundPosition = '-102px 33px';
             return;
         }
 
@@ -160,7 +176,17 @@ function startGame() {
         const cell = cells[index];
         
         if (cell.disabled === true) return;
-        
+
         cell.style.backgroundPosition = '-34px 33px';
     }
+
+    // Ставит вопросительный знак при нажатии ПКМ
+    // function QuestionMark(row, column) {
+    //     const index = row * width + column;
+    //     const cell = cells[index];
+
+    //     if (cell.disabled === true) return;
+
+    //     cell.style.backgroundPosition = '-51px 33px';
+    // }
 }
