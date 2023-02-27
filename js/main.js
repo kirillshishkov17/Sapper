@@ -4,11 +4,11 @@ const height = 16;                  // Количество ячеек по ве
 const cellsCount = width * height;  // Количество ячеек на поле
 const bombCount = 40;               // Количество бомб в игре
 
-// Вызываем функцию начала игры
+// Вызываем функцию старта игры
 startGame()
 
 
-// Функция создающее пустое игровое поле
+// Функция старта игры
 function startGame() {
     const field = document.querySelector('.field');
     field.innerHTML = '<button></button>'.repeat(cellsCount)
@@ -19,11 +19,11 @@ function startGame() {
         .sort(() => Math.random() - 0.5)
         .slice(0, bombCount);
 
-    // Обработчик события клика на кнопку
+    // Обработчик события при клике на кнопку
     field.addEventListener('click', (event) => {
         const index = cells.indexOf(event.target);
-        const column = index % width; // !!! Есть вопросы к правильности подсчёта !!!
-        const row = Math.floor(index / width); // !!! Есть вопросы к правильности подсчёта !!!
+        const column = index % width;
+        const row = Math.floor(index / width);
 
         // При клике за пределами игрового поля
         if (event.target.tagName !== 'BUTTON') {
@@ -56,6 +56,7 @@ function startGame() {
 
         if (isBomb(row, column)) {
             cell.style.backgroundPosition = '-85px 33px';
+            alert('Вы проиграли!')
             return;
         }
 
@@ -76,7 +77,7 @@ function startGame() {
         }
     }
 
-    // !!!
+    // Считает количество бомб вокруг ячейки
     function getCount(row, column) {
         let count = 0;
         for (let i = -1; i <= 1; i++) {
@@ -88,9 +89,8 @@ function startGame() {
         }
         return count;
     }
-    // !!!
 
-    // Считает количество бомб вокруг ячейки и находим соответствующую картинку на спрайте
+    // Находит картинку на спрайте соответствующую количеству бомб вокруг
     function showMinesCount(count) {
         let res ='';
 
@@ -118,15 +118,13 @@ function startGame() {
                 break;
             case 8:
                 res = '-119px 16px'
-                break;
-            case 0:
-                res = '-17px 33px'
-                break;     
+                break;  
         }
 
         return res;
     }
 
+    // Не позволяет уйти за границы игрового поля
     function isValid(row, column) {
         return row >= 0
             && row < height
