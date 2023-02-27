@@ -44,16 +44,41 @@ function startGame() {
 
     // Функция открытия ячейки
     function open(row, column) {
+        if (!isValid(row, column)) return;
+
         const index = row * width + column;
         const cell = cells[index];
-        cell.style.backgroundPosition = isBomb(row, column) ? '-85px 33px' : getMinesCount(row, column);
+
+        if (cell.disabled === true) return;
+        cell.disabled = true;
+
+        const count = getCount(row, column);
+
+        if (isBomb(row, column)) {
+            cell.style.backgroundPosition = '-85px 33px';
+            return;
+        }
+
+        if (count !== 0) {
+            cell.style.backgroundPosition = showMinesCount(count);
+            return;
+        }
+
+        if (count === 0) {
+            cell.style.backgroundPosition = '-17px 33px';
+
+            for (let i = -1; i <= 1; i++) {
+                for (let j = -1; j <= 1; j++) {
+                    open(row + j, column + i);
+                }
+            }
+            return;
+        }
     }
 
-    // Считает количество бомб вокруг ячейки и находим соответствующую картинку на спрайте
-    function getMinesCount(row, column) {
+    // !!!
+    function getCount(row, column) {
         let count = 0;
-        let res ='';
-
         for (let i = -1; i <= 1; i++) {
             for (let j = -1; j <= 1; j++) {
                 if (isBomb(row + j, column + i)) {
@@ -61,6 +86,13 @@ function startGame() {
                 }
             }
         }
+        return count;
+    }
+    // !!!
+
+    // Считает количество бомб вокруг ячейки и находим соответствующую картинку на спрайте
+    function showMinesCount(count) {
+        let res ='';
 
         switch(count) {
             case 1:
