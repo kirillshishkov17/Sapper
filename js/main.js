@@ -36,6 +36,8 @@ function startGame() {
 
     // Проверка на наличие бомбы в ячейке
     function isBomb(row, column) {
+        if (!isValid(row, column)) return false;
+
         const index = row * width + column;
         return bombs.includes(index);
     }
@@ -47,7 +49,7 @@ function startGame() {
         cell.style.backgroundPosition = isBomb(row, column) ? '-85px 33px' : getMinesCount(row, column);
     }
 
-    // Считает количество бомб вокруг ячейки и находим соответствующую картинку на слайде
+    // Считает количество бомб вокруг ячейки и находим соответствующую картинку на спрайте
     function getMinesCount(row, column) {
         let count = 0;
         let res ='';
@@ -91,5 +93,12 @@ function startGame() {
         }
 
         return res;
+    }
+
+    function isValid(row, column) {
+        return row >= 0
+            && row < height
+            && column >= 0
+            && column < width;
     }
 }
