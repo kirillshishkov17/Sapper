@@ -5,7 +5,7 @@ import { flagsCount } from "./rightClick.js";
 const width = 16;                   // Количество ячеек по горизонатли
 const height = 16;                  // Количество ячеек по вертикали
 const cellsCount = width * height;  // Количество ячеек на поле
-const bombCount = 5;                // Количество бомб в игре
+const bombCount = 2;                // Количество бомб в игре
 
 // Вызываем функцию старта игры
 startGame()
@@ -103,7 +103,10 @@ function startGame() {
 
         // Победа, если последней ячейкой была открыта ячейка без бомбы, а флаги уже расставлены
         openedCount--;
+        console.log(flagsCount); // !!! Удалить после
+        
         if (openedCount <= bombCount && flagsCount <= 0) {
+            smile.style.backgroundPosition = '-82px 59px';
             alert('Вы победили!');
         }
 

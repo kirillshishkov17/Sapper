@@ -1,4 +1,4 @@
-let flagsCount = 5; // Зависит от количества бомб
+let flagsCount = 2; // Зависит от количества бомб
 let flagsArray = [];
 let questionMarkArray = [];
 
@@ -20,6 +20,9 @@ const rightClick = (index, cell, openedCount, bombCount) => {
 
         // Победа, если последним дейтсивем поставлен последний флаг
         if (openedCount <= bombCount && flagsCount <= 0) {
+            const smile = document.querySelector('.smile');
+            smile.style.backgroundPosition = '-82px 59px';
+            flagsCount = bombCount;
             alert('WIN!!!');
         }
         return;
@@ -55,6 +58,11 @@ function emptyMark(cell) {
     if (cell.disabled === true) return;
     cell.style.backgroundPosition = '0 33px';
 }
+
+const smile = document.querySelector('.smile');
+smile.addEventListener('click', () => {
+    flagsCount = 2;
+})
 
 export default rightClick;
 export { flagsCount };
