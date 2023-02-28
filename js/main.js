@@ -41,6 +41,11 @@ function startGame() {
         const column = index % width;
         const row = Math.floor(index / width);
 
+        // При клике за пределами игрового поля
+        if (event.target.tagName !== 'BUTTON') {
+            return;
+        }
+
         // Убирает контекстное меню при нажатии ПКМ
         // if(event.preventDefault != undefined) {
         //     event.preventDefault();
