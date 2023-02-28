@@ -1,8 +1,11 @@
+import rightClick from "./rightClick.js";
+import { flagsCount } from "./rightClick.js";
+
 // Исходные данные
 const width = 16;                   // Количество ячеек по горизонатли
 const height = 16;                  // Количество ячеек по вертикали
 const cellsCount = width * height;  // Количество ячеек на поле
-const bombCount = 40;               // Количество бомб в игре
+const bombCount = 5;                // Количество бомб в игре
 
 // Вызываем функцию старта игры
 startGame()
@@ -20,7 +23,8 @@ function startGame() {
     const bombs = [...Array(256).keys()]
         .sort(() => Math.random() - 0.5)
         .slice(0, bombCount);
-
+       
+        
     // Обработчик события при клике (ЛКМ) на кнопку
     field.addEventListener('click', (event) => {
         const index = cells.indexOf(event.target);
@@ -56,8 +60,7 @@ function startGame() {
     // Обработчик событий при клике (ПКМ) на кнопку
     field.addEventListener('contextmenu', (event) => {
         const index = cells.indexOf(event.target);
-        const column = index % width;
-        const row = Math.floor(index / width);
+        const cell = cells[index];
 
         // При клике за пределами игрового поля
         if (event.target.tagName !== 'BUTTON') {
@@ -65,11 +68,13 @@ function startGame() {
         }
 
         // Убирает контекстное меню при нажатии ПКМ
-        // if(event.preventDefault != undefined) {
-        //     event.preventDefault();
-        // }
+        if(event.preventDefault != undefined) {
+            event.preventDefault();
+        }
 
-        flag(row, column)
+        if (cell.disabled === true) return;
+
+        rightClick(index, cell, openedCount, bombCount);
     })
 
     // Обработчик событий при клике на смайлик
@@ -96,11 +101,10 @@ function startGame() {
         if (cell.disabled === true) return;
         cell.disabled = true;
 
-        // Условие победы
+        // Победа, если последней ячейкой была открыта ячейка без бомбы, а флаги уже расставлены
         openedCount--;
-        if (openedCount <= bombCount) {
-            alert('Вы победили!')
-            return;
+        if (openedCount <= bombCount && flagsCount <= 0) {
+            alert('Вы победили!');
         }
 
         const count = getCount(row, column);
@@ -202,24 +206,4 @@ function startGame() {
             && column >= 0
             && column < width;
     }
-
-    // Ставит флаг при нажатии ПКМ
-    function flag(row, column) {
-        const index = row * width + column;
-        const cell = cells[index];
-        
-        if (cell.disabled === true) return;
-
-        cell.style.backgroundPosition = '-34px 33px';
-    }
-
-    // Ставит вопросительный знак при нажатии ПКМ
-    // function QuestionMark(row, column) {
-    //     const index = row * width + column;
-    //     const cell = cells[index];
-
-    //     if (cell.disabled === true) return;
-
-    //     cell.style.backgroundPosition = '-51px 33px';
-    // }
 }
