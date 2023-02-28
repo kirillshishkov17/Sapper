@@ -6,14 +6,34 @@ const width = 16;                   // Количество ячеек по го
 const height = 16;                  // Количество ячеек по вертикали
 const cellsCount = width * height;  // Количество ячеек на поле
 const bombCount = 2;                // Количество бомб в игре
+let play = true;                    // Игра запускается при загрузке страницы, когда на
 
 // Вызываем функцию старта игры
-startGame()
+startGame();
 
+
+// Перезапускает новую игру при клике на смайлик
+const smile = document.querySelector('.smile');
+smile.addEventListener('mouseup', () => {
+    smile.style.backgroundPosition ='-1px 59px';
+    console.log('Work!');
+    play = true;
+    startGame();
+})
+
+smile.addEventListener('mousedown', () => {
+    smile.style.backgroundPosition = '-28px 59px';
+})
 
 // Функция старта игры
 function startGame() {
-    const smile = document.querySelector('.smile');
+
+    // Перезапускает игру при клике по смайлику
+    if (play === false) {
+        play = !play;
+        return;
+    }
+
     const field = document.querySelector('.field');
     field.innerHTML = '<button></button>'.repeat(cellsCount)
     const cells = [...field.children];
@@ -22,9 +42,8 @@ function startGame() {
     // Генерация бомб
     const bombs = [...Array(256).keys()]
         .sort(() => Math.random() - 0.5)
-        .slice(0, bombCount);
-       
-        
+        .slice(0, bombCount);        
+
     // Обработчик события при клике (ЛКМ) на кнопку
     field.addEventListener('click', (event) => {
         const index = cells.indexOf(event.target);
@@ -49,14 +68,6 @@ function startGame() {
         smile.style.backgroundPosition ='-1px 59px'
     })
 
-    smile.addEventListener('mousedown', () => {
-        smile.style.backgroundPosition = '-28px 59px';
-    })
-
-    smile.addEventListener('mouseup', () => {
-        smile.style.backgroundPosition ='-1px 59px';
-    })
-
     // Обработчик событий при клике (ПКМ) на кнопку
     field.addEventListener('contextmenu', (event) => {
         const index = cells.indexOf(event.target);
@@ -76,12 +87,6 @@ function startGame() {
 
         rightClick(index, cell, openedCount, bombCount);
     })
-
-    // Обработчик событий при клике на смайлик
-    smile.addEventListener('click',() => {
-        console.log('Work!'); // !!! Убрать после отладки
-        startGame();
-    });
 
     // Проверка на наличие бомбы в ячейке
     function isBomb(row, column) {
@@ -103,7 +108,6 @@ function startGame() {
 
         // Победа, если последней ячейкой была открыта ячейка без бомбы, а флаги уже расставлены
         openedCount--;
-        console.log(flagsCount); // !!! Удалить после
         
         if (openedCount <= bombCount && flagsCount <= 0) {
             smile.style.backgroundPosition = '-82px 59px';

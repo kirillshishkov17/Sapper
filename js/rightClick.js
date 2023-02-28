@@ -59,6 +59,7 @@ function emptyMark(cell) {
     cell.style.backgroundPosition = '0 33px';
 }
 
+// Восстановление исходного количества флажков при начале новой игры
 const smile = document.querySelector('.smile');
 smile.addEventListener('click', () => {
     flagsCount = 2;
