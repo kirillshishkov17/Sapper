@@ -10,6 +10,7 @@ startGame()
 
 // Функция старта игры
 function startGame() {
+    const smile = document.querySelector('.smile');
     const field = document.querySelector('.field');
     field.innerHTML = '<button></button>'.repeat(cellsCount)
     const cells = [...field.children];
@@ -35,15 +36,21 @@ function startGame() {
         open(row, column);
     })
 
-    // Обработчик изменяющий смайл на время клика по закрытой ячейке
+    // Обработчики изменяющие смайл на время клика по закрытой ячейке
     field.addEventListener('mousedown', (event) => {
-        const smile = document.querySelector('.smile');
         smile.style.backgroundPosition ='-55px 59px'
     })
 
-    field.addEventListener('mouseup', (event) => {
-        const smile = document.querySelector('.smile');
+    field.addEventListener('mouseup', () => {
         smile.style.backgroundPosition ='-1px 59px'
+    })
+
+    smile.addEventListener('mousedown', () => {
+        smile.style.backgroundPosition = '-28px 59px';
+    })
+
+    smile.addEventListener('mouseup', () => {
+        smile.style.backgroundPosition ='-1px 59px';
     })
 
     // Обработчик событий при клике (ПКМ) на кнопку
@@ -66,9 +73,8 @@ function startGame() {
     })
 
     // Обработчик событий при клике на смайлик
-    const smile = document.querySelector('.smile');
     smile.addEventListener('click',() => {
-        console.log('Work!');
+        console.log('Work!'); // !!! Убрать после отладки
         startGame();
     });
 
@@ -118,6 +124,10 @@ function startGame() {
 
             // Красным выделяем ту, на которую нажал пользователь
             cell.style.backgroundPosition = '-102px 33px';
+
+            // Меняем смайлик при проигрыше
+            smile.style.backgroundPosition ='30px 59px';
+
             return;
         }
 
