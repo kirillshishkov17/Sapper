@@ -35,6 +35,17 @@ function startGame() {
         open(row, column);
     })
 
+    // Обработчик изменяющий смайл на время клика по закрытой ячейке
+    field.addEventListener('mousedown', (event) => {
+        const smile = document.querySelector('.smile');
+        smile.style.backgroundPosition ='-55px 59px'
+    })
+
+    field.addEventListener('mouseup', (event) => {
+        const smile = document.querySelector('.smile');
+        smile.style.backgroundPosition ='-1px 59px'
+    })
+
     // Обработчик событий при клике (ПКМ) на кнопку
     field.addEventListener('contextmenu', (event) => {
         const index = cells.indexOf(event.target);
@@ -53,6 +64,13 @@ function startGame() {
 
         flag(row, column)
     })
+
+    // Обработчик событий при клике на смайлик
+    const smile = document.querySelector('.smile');
+    smile.addEventListener('click',() => {
+        console.log('Work!');
+        startGame();
+    });
 
     // Проверка на наличие бомбы в ячейке
     function isBomb(row, column) {

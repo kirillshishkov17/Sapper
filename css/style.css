@@ -1,31 +1,13 @@
-body {
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden;
-}
-
 .field {
     display: grid;
     grid-template-columns: repeat(16, 16px);
-    justify-content: center;
-    margin-top: 250px;
-    transform: scale(1.75);
-
-    padding: 50px;
-    padding-left: 48px;
-    background-image: url('../img/minesweeper.png');
-    background-repeat: no-repeat;
-    /* background-position: 625px 0px; */
-    background-position: center -1px;
-    background-size: 276px;
-    background-attachment: fixed;
 }
 
 button {
     height: 16px;
     font-size: 10px;
     background-image: url(../img/sprites.png);
-    background-position: 0px 33px;
+    background-position: 0 33px;
     /* background-position: -85px 33px; |бомба| */
     /* background-position: -17px 33px; |0| */
     /* background-position: 0px 16px;   |1| */
@@ -39,4 +21,29 @@ button {
     /* background-position: -34px 33px; |Flag| */
     border: none;
     cursor: pointer;
+}
+
+.container {
+    display: grid;
+    grid-row-gap: 5px;
+    justify-content: center;
+    background-color: rgb(212, 208, 208);
+    width: 500px;
+    padding: 20px;
+}
+
+.menu {
+    display: grid;
+    grid-template-columns: 0.5fr 1fr 0.5fr;
+    justify-items: center;
+}
+
+.smile {
+    width: 25px;
+    height: 25px;
+    background-position: -1px 59px;
+}
+
+.smile:active {
+    background-position: -28px 59px;
 }
