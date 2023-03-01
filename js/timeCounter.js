@@ -16,7 +16,7 @@ const nums = [
 let isRun = true;
 
 // Логика секундомера
-function countdown(isStop) {
+function timeCounter(isStop) {
 
     if (isRun === true) {
         const sec = document.querySelector('#sec3');
@@ -57,4 +57,4 @@ function countdown(isStop) {
     isRun = false;
 }
 
-export default countdown;
+export default timeCounter;

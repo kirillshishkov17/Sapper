@@ -22,6 +22,10 @@ button {
     background-size: 51.2%;
     width: 500px;
     padding: 20px;
+
+    transform: scale(1.9);
+    margin: auto;
+    margin-top: 250px;
 }
 
 .menu {

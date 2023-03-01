@@ -20,7 +20,7 @@ const rightClick = (index, cell, openedCount, bombCount) => {
         flagsCount--;
         flagsArray.push(index);
         flagMark(cell);
-        document.querySelector('.bombCounter').innerHTML = flagsCount;
+        // document.querySelector('.bombCounter').innerHTML = flagsCount;
 
         // Победа, если последним дейтсивем поставлен последний флаг
         if (openedCount <= bombCount && flagsCount <= 0) {
@@ -34,7 +34,7 @@ const rightClick = (index, cell, openedCount, bombCount) => {
 
     if (flagsArray.includes(index)) {
         flagsCount++;
-        document.querySelector('.bombCounter').innerHTML = flagsCount;
+        // document.querySelector('.bombCounter').innerHTML = flagsCount;
         let deleteFlagIndex = flagsArray.indexOf(index);
         if (deleteFlagIndex !== -1) {
             flagsArray.splice(deleteFlagIndex, 1);

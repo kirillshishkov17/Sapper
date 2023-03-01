@@ -1,6 +1,6 @@
 import rightClick from "./rightClickLogic.js";
 import { flagsCount, isFlag } from "./rightClickLogic.js";
-import countdown from "./countdown.js";
+import timeCounter from "./timeCounter.js";
 
 // Исходные данные
 const width = 16;                   // Количество ячеек по горизонатли
@@ -23,7 +23,7 @@ smile.addEventListener('mouseup', () => {
     smile.style.backgroundImage = 'url(../img/smile.png)';
     console.log('Work!'); // !!! Удалить после отладки
     play = true;
-    bombCounter.innerHTML = bombCount;
+    // bombCounter.innerHTML = bombCount;
 
     startGame();
 }) 
@@ -64,6 +64,7 @@ function startGame() {
 
         // При клике на кнопку
         open(row, column);
+        timeCounter();
     })
 
     // Обработчики изменяющие смайл на время клика по закрытой ячейке
