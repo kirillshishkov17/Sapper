@@ -1,3 +1,5 @@
+import { plusBombCounter, minusBombCounter} from "./bombCounter.js";
+
 let flagsCount = 40; // Зависит от количества бомб
 let flagsArray = [];
 let questionMarkArray = [];
@@ -20,6 +22,7 @@ const rightClick = (index, cell, openedCount, bombCount) => {
         flagsCount--;
         flagsArray.push(index);
         flagMark(cell);
+        minusBombCounter();
         // document.querySelector('.bombCounter').innerHTML = flagsCount;
 
         // Победа, если последним дейтсивем поставлен последний флаг
@@ -42,6 +45,7 @@ const rightClick = (index, cell, openedCount, bombCount) => {
 
         questionMarkArray.push(index);
         QuestionMark(cell);
+        plusBombCounter();
         return;
     }
 }

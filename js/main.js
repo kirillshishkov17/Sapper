@@ -2,6 +2,7 @@ import rightClick from "./rightClickLogic.js";
 import { flagsCount, isFlag } from "./rightClickLogic.js";
 import timeCounter from "./timeCounter.js";
 
+
 // Исходные данные
 const width = 16;                   // Количество ячеек по горизонатли
 const height = 16;                  // Количество ячеек по вертикали
@@ -23,7 +24,6 @@ smile.addEventListener('mouseup', () => {
     smile.style.backgroundImage = 'url(../img/smile.png)';
     console.log('Work!'); // !!! Удалить после отладки
     play = true;
-    // bombCounter.innerHTML = bombCount;
 
     startGame();
 }) 
