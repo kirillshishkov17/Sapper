@@ -1,4 +1,4 @@
-let flagsCount = 2; // Зависит от количества бомб
+let flagsCount = 40; // Зависит от количества бомб
 let flagsArray = [];
 let questionMarkArray = [];
 
@@ -14,9 +14,13 @@ const rightClick = (index, cell, openedCount, bombCount) => {
     }
 
     if (!flagsArray.includes(index)) {
+
+        if (flagsCount <= 0) return;
+
         flagsCount--;
         flagsArray.push(index);
         flagMark(cell);
+        document.querySelector('.bombCounter').innerHTML = flagsCount;
 
         // Победа, если последним дейтсивем поставлен последний флаг
         if (openedCount <= bombCount && flagsCount <= 0) {
@@ -30,6 +34,7 @@ const rightClick = (index, cell, openedCount, bombCount) => {
 
     if (flagsArray.includes(index)) {
         flagsCount++;
+        document.querySelector('.bombCounter').innerHTML = flagsCount;
         let deleteFlagIndex = flagsArray.indexOf(index);
         if (deleteFlagIndex !== -1) {
             flagsArray.splice(deleteFlagIndex, 1);
@@ -62,8 +67,12 @@ function emptyMark(cell) {
 // Восстановление исходного количества флажков при начале новой игры
 const smile = document.querySelector('.smile');
 smile.addEventListener('click', () => {
-    flagsCount = 2;
+    flagsCount = 40;
 })
 
+function isFlag(index) {
+    return flagsArray.includes(index);
+}
+
 export default rightClick;
-export { flagsCount };
+export { flagsCount, isFlag };

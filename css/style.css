@@ -43,3 +43,14 @@ button {
     height: 25px;
     background-position: -1px 59px;
 }
+
+/*Секундомер*/
+.countdown {
+    display: flex;
+}
+
+.countdown_item {
+    width: 15px;
+    height: 25px;
+    position: 10px 10px;
+}

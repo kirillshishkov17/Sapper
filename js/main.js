@@ -1,12 +1,17 @@
-import rightClick from "./rightClick.js";
-import { flagsCount } from "./rightClick.js";
+import rightClick from "./rightClickLogic.js";
+import { flagsCount, isFlag } from "./rightClickLogic.js";
+import countdown from "./countdown.js";
 
 // Исходные данные
 const width = 16;                   // Количество ячеек по горизонатли
 const height = 16;                  // Количество ячеек по вертикали
 const cellsCount = width * height;  // Количество ячеек на поле
-const bombCount = 2;                // Количество бомб в игре
+const bombCount = 40;                // Количество бомб в игре
 let play = true;                    // Игра запускается при загрузке страницы, когда на
+
+// Добавление счётчика оставшихся бомб
+const bombCounter = document.querySelector('.bombCounter');
+bombCounter.innerHTML = bombCount;
 
 // Вызываем функцию старта игры
 startGame();
@@ -16,10 +21,12 @@ startGame();
 const smile = document.querySelector('.smile');
 smile.addEventListener('mouseup', () => {
     smile.style.backgroundPosition ='-1px 59px';
-    console.log('Work!');
+    console.log('Work!'); // !!! Удалить после отладки
     play = true;
+    bombCounter.innerHTML = bombCount;
+
     startGame();
-})
+}) 
 
 smile.addEventListener('mousedown', () => {
     smile.style.backgroundPosition = '-28px 59px';
@@ -104,7 +111,13 @@ function startGame() {
         const cell = cells[index];
 
         if (cell.disabled === true) return;
-        cell.disabled = true;
+
+        // Попали на флажок?
+        if (isFlag(index)) {
+            return;
+        } else {
+            cell.disabled = true;
+        }
 
         // Победа, если последней ячейкой была открыта ячейка без бомбы, а флаги уже расставлены
         openedCount--;
@@ -125,8 +138,13 @@ function startGame() {
                     let index = j * width + i;
 
                     if (bombs.includes(index)) {
-                        cells[index].style.backgroundPosition = '-85px 33px';
-                        cells[index].disabled = true;
+                        if (isFlag(index)) {
+                            cells[index].style.backgroundPosition = '-119.7px 33px';
+                            cells[index].disabled = true;
+                        } else {
+                            cells[index].style.backgroundPosition = '-85px 33px';
+                            cells[index].disabled = true;
+                        }
                     } else {
                         cells[index].disabled = true;
                     }
