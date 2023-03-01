@@ -22,7 +22,6 @@ smile.addEventListener('mouseup', () => {
     count = 40;
 })
 
-// !!! Было бы здорово подтягивать это из БД
 const array = [
     {
         count: 0,

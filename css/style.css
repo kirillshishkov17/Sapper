@@ -56,3 +56,14 @@ button {
 .bombCounter {
     display: flex;
 }
+
+/* div .test{
+    background: url(../img/bomb.png) content-box no-repeat;
+    background: url(../img/zero_cell.png) content-box no-repeat;
+    background: url(../img/one_cell.png) content-box no-repeat;
+    background: url(../img/two_cell.png) content-box no-repeat;
+    background: url(../img/three_cell.png) content-box no-repeat;
+    background: url(../img/four_cell.png) content-box no-repeat;
+    background: url(../img/five_cell.png) content-box no-repeat;
+
+} */

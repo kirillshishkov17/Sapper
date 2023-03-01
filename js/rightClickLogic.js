@@ -23,7 +23,6 @@ const rightClick = (index, cell, openedCount, bombCount) => {
         flagsArray.push(index);
         flagMark(cell);
         minusBombCounter();
-        // document.querySelector('.bombCounter').innerHTML = flagsCount;
 
         // Победа, если последним дейтсивем поставлен последний флаг
         if (openedCount <= bombCount && flagsCount <= 0) {
@@ -37,7 +36,6 @@ const rightClick = (index, cell, openedCount, bombCount) => {
 
     if (flagsArray.includes(index)) {
         flagsCount++;
-        // document.querySelector('.bombCounter').innerHTML = flagsCount;
         let deleteFlagIndex = flagsArray.indexOf(index);
         if (deleteFlagIndex !== -1) {
             flagsArray.splice(deleteFlagIndex, 1);
@@ -54,6 +52,7 @@ const rightClick = (index, cell, openedCount, bombCount) => {
 function flagMark(cell) {
     if (cell.disabled === true) return;
     cell.style.backgroundImage = 'url(../img/flag.png)';
+    // cell.disabled = false;
 }
 
 // Отрисовывает вопросительный знак при ПКМ

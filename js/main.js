@@ -23,7 +23,6 @@ const smile = document.querySelector('.smile');
 smile.addEventListener('mouseup', () => {
     smile.style.backgroundImage = 'url(../img/smile.png)';
     console.log('Work!'); // !!! Удалить после отладки
-    play = true;
 
     startGame();
 }) 
@@ -35,21 +34,16 @@ smile.addEventListener('mousedown', () => {
 // Функция старта игры
 function startGame() {
 
-    // Перезапускает игру при клике по смайлику
-    if (play === false) {
-        play = !play;
-        return;
-    }
-
     const field = document.querySelector('.field');
     field.innerHTML = '<button></button>'.repeat(cellsCount)
     const cells = [...field.children];
     let openedCount = cellsCount;
 
     // Генерация бомб
-    const bombs = [...Array(256).keys()]
+    let bombs = [...Array(256).keys()]
         .sort(() => Math.random() - 0.5)
-        .slice(0, bombCount);        
+        .slice(0, bombCount);
+        console.log(bombs);
 
     // Обработчик события при клике (ЛКМ) на кнопку
     field.addEventListener('click', (event) => {
@@ -79,7 +73,7 @@ function startGame() {
     // Обработчик событий при клике (ПКМ) на кнопку
     field.addEventListener('contextmenu', (event) => {
         const index = cells.indexOf(event.target);
-        const cell = cells[index];
+        let cell = cells[index];
 
         // При клике за пределами игрового поля
         if (event.target.tagName !== 'BUTTON') {
@@ -104,12 +98,33 @@ function startGame() {
         return bombs.includes(index);
     }
 
+    let isFirstClick = true; // !!! Работаю тут
+
     // Функция открытия ячейки
     function open(row, column) {
         if (!isValid(row, column)) return;
 
         const index = row * width + column;
-        const cell = cells[index];
+        let cell = cells[index];
+
+        // Если это первый клик и попалась бомба
+        if (isBomb(row, column) && isFirstClick) {
+            let allowedIndexes = [...Array(256).keys()].filter(n => !bombs.includes(n));
+            // console.log('Разрешённые индексы' + allowedIndexes); // !!! Удалить после
+            let myIndex = bombs.indexOf(index);
+            console.log('Старый индекс' + index);
+            if (myIndex !== -1) {
+                bombs.splice(myIndex, 1);
+                let item = allowedIndexes[Math.floor(Math.random()*allowedIndexes.length)];
+                console.log('Новый индекс ' + item);
+                bombs.push(item);
+            }
+
+            console.log(bombs);
+            isFirstClick = false;
+            open(row, column);
+            return;
+        }
 
         if (cell.disabled === true) return;
 
@@ -163,11 +178,13 @@ function startGame() {
 
         if (count !== 0) {
             cell.style.backgroundImage = showMinesCount(count);
+            isFirstClick = false;
             return;
         }
 
         if (count === 0) {
             cell.style.backgroundImage = 'url(../img/zero_cell.png)';
+            isFirstClick = false;
 
             for (let i = -1; i <= 1; i++) {
                 for (let j = -1; j <= 1; j++) {
