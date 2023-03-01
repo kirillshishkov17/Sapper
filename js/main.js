@@ -10,8 +10,8 @@ const bombCount = 40;                // Количество бомб в игр�
 let play = true;                    // Игра запускается при загрузке страницы, когда на
 
 // Добавление счётчика оставшихся бомб
-const bombCounter = document.querySelector('.bombCounter');
-bombCounter.innerHTML = bombCount;
+// const bombCounter = document.querySelector('.bombCounter');
+// bombCounter.innerHTML = bombCount;
 
 // Вызываем функцию старта игры
 startGame();
@@ -20,7 +20,7 @@ startGame();
 // Перезапускает новую игру при клике на смайлик
 const smile = document.querySelector('.smile');
 smile.addEventListener('mouseup', () => {
-    smile.style.backgroundPosition ='-1px 59px';
+    smile.style.backgroundImage = 'url(../img/smile.png)';
     console.log('Work!'); // !!! Удалить после отладки
     play = true;
     bombCounter.innerHTML = bombCount;
@@ -29,7 +29,7 @@ smile.addEventListener('mouseup', () => {
 }) 
 
 smile.addEventListener('mousedown', () => {
-    smile.style.backgroundPosition = '-28px 59px';
+    smile.style.backgroundImage = 'url(../img/smile_press.png)';
 })
 
 // Функция старта игры
@@ -68,11 +68,11 @@ function startGame() {
 
     // Обработчики изменяющие смайл на время клика по закрытой ячейке
     field.addEventListener('mousedown', (event) => {
-        smile.style.backgroundPosition ='-55px 59px'
+        smile.style.backgroundImage = 'url(../img/smile_fear.png)'
     })
 
     field.addEventListener('mouseup', () => {
-        smile.style.backgroundPosition ='-1px 59px'
+        smile.style.backgroundImage = 'url(../img/smile.png)'
     })
 
     // Обработчик событий при клике (ПКМ) на кнопку
@@ -123,7 +123,7 @@ function startGame() {
         openedCount--;
         
         if (openedCount <= bombCount && flagsCount <= 0) {
-            smile.style.backgroundPosition = '-82px 59px';
+            smile.style.backgroundImage = 'url(../img/smile_win.png)';
             alert('Вы победили!');
         }
 
@@ -139,10 +139,10 @@ function startGame() {
 
                     if (bombs.includes(index)) {
                         if (isFlag(index)) {
-                            cells[index].style.backgroundPosition = '-119.7px 33px';
+                            cells[index].style.backgroundImage = 'url(../img/bomb_flag.png)';
                             cells[index].disabled = true;
                         } else {
-                            cells[index].style.backgroundPosition = '-85px 33px';
+                            cells[index].style.backgroundImage = 'url(../img/bomb.png)';
                             cells[index].disabled = true;
                         }
                     } else {
@@ -152,21 +152,21 @@ function startGame() {
             }
 
             // Красным выделяем ту, на которую нажал пользователь
-            cell.style.backgroundPosition = '-102px 33px';
+            cell.style.backgroundImage = 'url(../img/bomb_red.png)';
 
             // Меняем смайлик при проигрыше
-            smile.style.backgroundPosition ='30px 59px';
+            smile.style.backgroundImage = 'url(../img/smile_dead.png)';
 
             return;
         }
 
         if (count !== 0) {
-            cell.style.backgroundPosition = showMinesCount(count);
+            cell.style.backgroundImage = showMinesCount(count);
             return;
         }
 
         if (count === 0) {
-            cell.style.backgroundPosition = '-17px 33px';
+            cell.style.backgroundImage = 'url(../img/zero_cell.png)';
 
             for (let i = -1; i <= 1; i++) {
                 for (let j = -1; j <= 1; j++) {
@@ -196,28 +196,28 @@ function startGame() {
 
         switch(count) {
             case 1:
-                res = '0px 16px'
+                res = 'url(../img/one_cell.png)'
                 break;
             case 2:
-                res = '-17px 16px'
+                res = 'url(../img/two_cell.png)'
                 break;
             case 3:
-                res = '-34px 16px'
+                res = 'url(../img/three_cell.png)'
                 break;
             case 4:
-                res = '-51px 16px'
+                res = 'url(../img/four_cell.png)'
                 break;
             case 5:
-                res = '-68px 16px'
+                res = 'url(../img/five_cell.png)'
                 break;
             case 6:
-                res = '-85px 16px'
+                res = 'url(../img/six_cell.png)'
                 break;
             case 7:
-                res = '-102px 16px'
+                res = 'url(../img/seven_cell.png)'
                 break;
             case 8:
-                res = '-119px 16px'
+                res = 'url(../img/eight_cell.png)'
                 break;  
         }
 

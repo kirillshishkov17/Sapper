@@ -1,33 +1,25 @@
 .field {
     display: grid;
     grid-template-columns: repeat(16, 16px);
+    margin-left: -2px;
 }
 
 button {
     height: 16px;
     font-size: 10px;
-    background-image: url(../img/sprites.png);
-    background-position: 0 33px;
-    /* background-position: -85px 33px; |бомба| */
-    /* background-position: -17px 33px; |0| */
-    /* background-position: 0px 16px;   |1| */
-    /* background-position: -17px 16px; |2| */
-    /* background-position: -34px 16px; |3| */
-    /* background-position: -51px 16px; |4| */
-    /* background-position: -68px 16px; |5| */
-    /* background-position: -85px 16px; |6| */
-    /* background-position: -102px 16px; |7| */
-    /* background-position: -119px 16px; |8| */
-    /* background-position: -34px 33px; |Flag| */
+    background-image: url(../img/closed_cell.png);
     border: none;
     cursor: pointer;
 }
 
 .container {
     display: grid;
-    grid-row-gap: 5px;
+    grid-row-gap: 9.5px;
     justify-content: center;
-    background-color: rgb(212, 208, 208);
+    background-image: url(../img/minesweeper.png);
+    background-repeat: no-repeat;
+    background-position: center 5px;
+    background-size: 51.2%;
     width: 500px;
     padding: 20px;
 }
@@ -36,12 +28,16 @@ button {
     display: grid;
     grid-template-columns: 0.5fr 1fr 0.5fr;
     justify-items: center;
+    margin-top: -1px;
+    background-image: url('../img/menu_background.png');
+    background-repeat: no-repeat;
+    background-position: center center;
 }
 
 .smile {
-    width: 25px;
-    height: 25px;
-    background-position: -1px 59px;
+    width: 26px;
+    height: 26px;
+    background-image: url('../img/smile.png');
 }
 
 /*Секундомер*/
@@ -53,4 +49,9 @@ button {
     width: 15px;
     height: 25px;
     position: 10px 10px;
+}
+
+/*Счётчик бомб*/
+.bombCounter {
+    display: flex;
 }

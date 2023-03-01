@@ -25,7 +25,7 @@ const rightClick = (index, cell, openedCount, bombCount) => {
         // Победа, если последним дейтсивем поставлен последний флаг
         if (openedCount <= bombCount && flagsCount <= 0) {
             const smile = document.querySelector('.smile');
-            smile.style.backgroundPosition = '-82px 59px';
+            smile.style.backgroundImage = 'url(../img/smile_win.png)';
             flagsCount = bombCount;
             alert('WIN!!!');
         }
@@ -49,19 +49,19 @@ const rightClick = (index, cell, openedCount, bombCount) => {
 // Отрисовывает флаг при ПКМ (Правая Кнопка Мыши)
 function flagMark(cell) {
     if (cell.disabled === true) return;
-    cell.style.backgroundPosition = '-34px 33px';
+    cell.style.backgroundImage = 'url(../img/flag.png)';
 }
 
 // Отрисовывает вопросительный знак при ПКМ
 function QuestionMark(cell) {
     if (cell.disabled === true) return;
-    cell.style.backgroundPosition = '-51px 33px';
+    cell.style.backgroundImage = 'url(../img/question_mark.png)';
 }
 
 // Отрисовывает закрытую ячейку при ПКМ
 function emptyMark(cell) {
     if (cell.disabled === true) return;
-    cell.style.backgroundPosition = '0 33px';
+    cell.style.backgroundImage = 'url(../img/closed_cell.png)';
 }
 
 // Восстановление исходного количества флажков при начале новой игры
