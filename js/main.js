@@ -55,8 +55,9 @@ function startGame() {
         }
 
         // При клике на кнопку
-        if (isFirstClick === true) {
+        if (isFirstClick) {
             timeCounter();
+            isFirstClick = false;
         }
         open(row, column, cells, bombs, openedCount, isFirstClick);
     })

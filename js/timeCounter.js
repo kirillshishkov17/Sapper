@@ -12,9 +12,6 @@ const nums = [
     'img/9.png' 
 ]
 
-// Выполняем функцию только один раз
-let isRun = true;
-
 // Логика секундомера
 function timeCounter() {
 
