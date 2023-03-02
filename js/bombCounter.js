@@ -1,4 +1,4 @@
-let count = 40;
+let count = 40; // Равен количеству бомб
 const unit = document.querySelector('#unit');
 const decade = document.querySelector('#decade');
 

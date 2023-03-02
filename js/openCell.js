@@ -1,7 +1,7 @@
 import { isFlag } from "./rightClick.js";
 
-let closedCell = 256; // Всего ячеек на игровом поле
-let stopTimer = false; // Меняется, если попали на бомбу
+let closedCell = 256;   // Всего ячеек на игровом поле
+let stopTimer = false;  // Меняется, если попали на бомбу
 
 // Функция открытия ячейки
 function open(row, column, height, width, cells, bombs, openedCount, isFirstClick, bombCount) {
