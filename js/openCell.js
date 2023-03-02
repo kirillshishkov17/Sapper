@@ -1,5 +1,7 @@
 import { isFlag } from "./rightClick.js";
 
+let closedCell = 256;
+
 // Функция открытия ячейки
 function open(row, column, height, width, cells, bombs, openedCount, isFirstClick, bombCount) {
     if (!isValid(row, column, height, width)) return;
@@ -7,6 +9,11 @@ function open(row, column, height, width, cells, bombs, openedCount, isFirstClic
     const smile = document.querySelector('.smile');
     const index = row * width + column;
     let cell = cells[index];
+
+    if (isFirstClick) {
+        closedCell = openedCount;
+    }
+    // console.log(closedCell); // !!! WORK HERE
 
     // Если это первый клик и попалась бомба
     if (isBomb(row, column, bombs, height, width) && isFirstClick) {
@@ -34,11 +41,15 @@ function open(row, column, height, width, cells, bombs, openedCount, isFirstClic
     }
 
     // Победа, если была открыта последняя ячейка без бомбы
-    openedCount--;
-    
-    if (openedCount <= bombCount && !isBomb(row, column, bombs, height, width)) {
+    closedCell--;
+
+    if (closedCell <= bombCount && !isBomb(row, column, bombs, height, width)) {
         smile.style.backgroundImage = 'url(../img/smile_win.png)';
-        alert('Вы победили!');
+        
+        for (let i = 0; i < cells.length; i++) {
+            cells[i].disabled = true;
+        }
+        // alert('Вы победили!');
     }
 
     const count = getCount(row, column, bombs, height, width);

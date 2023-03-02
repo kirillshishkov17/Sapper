@@ -7,9 +7,10 @@ import open from "./openCell.js";
 const width = 16;                   // Количество ячеек по горизонатли
 const height = 16;                  // Количество ячеек по вертикали
 const cellsCount = width * height;  // Количество ячеек на поле
-const bombCount = 40;                // Количество бомб в игре
+let bombCount = 2;                // Количество бомб в игре
 let isNewGame = false;
 let isFirstClick = true;
+let openedCount = cellsCount;
 
 // Генерация бомб
 let bombs = [...Array(256).keys()]
@@ -37,7 +38,7 @@ function startGame() {
     const field = document.querySelector('.field');
     field.innerHTML = '<button></button>'.repeat(cellsCount)
     const cells = [...field.children];
-    let openedCount = cellsCount;
+    // let openedCount = cellsCount;
 
     // // Генерация бомб
     // let bombs = [...Array(256).keys()]
@@ -62,8 +63,10 @@ function startGame() {
             timeCounter();
             open(row, column, height, width, cells, bombs, openedCount, isFirstClick, bombCount);
             isFirstClick = false;
+            return;
         }
         open(row, column, height, width, cells, bombs, openedCount, isFirstClick, bombCount);
+        return;
     })
 
     // Обработчики изменяющие смайл на время клика по закрытой ячейке
@@ -113,7 +116,8 @@ function startNewGame() {
     isNewGame = true;
     rightClick(0, 0, 0, 0, isNewGame);
     isNewGame = false;
-    isFirstClick = true
+    isFirstClick = true;
+    bombCount = 2; // !!! Изменить тут на 40 в конце
 
 
     // let openedCount = cellsCount;
