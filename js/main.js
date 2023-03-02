@@ -92,14 +92,6 @@ function startGame() {
         rightClick(index, cell, openedCount, bombCount);
     })
 
-    // Проверка на наличие бомбы в ячейке
-    function isBomb(row, column) {
-        if (!isValid(row, column)) return false;
-
-        const index = row * width + column;
-        return bombs.includes(index);
-    }
-
     // Функция открытия ячейки
     function open(row, column) {
         if (!isValid(row, column)) return;
@@ -108,7 +100,7 @@ function startGame() {
         let cell = cells[index];
 
         // Если это первый клик и попалась бомба
-        if (isBomb(row, column) && isFirstClick) {
+        if (isBomb(row, column, bombs) && isFirstClick) {
             let allowedIndexes = [...Array(256).keys()].filter(n => !bombs.includes(n));
             let myIndex = bombs.indexOf(index);
 
@@ -135,15 +127,15 @@ function startGame() {
         // Победа, если была открыта последняя ячейка без бомбы
         openedCount--;
         
-        if (openedCount <= bombCount && !isBomb(row, column)) {
+        if (openedCount <= bombCount && !isBomb(row, column, bombs)) {
             smile.style.backgroundImage = 'url(../img/smile_win.png)';
             alert('Вы победили!');
         }
 
-        const count = getCount(row, column);
+        const count = getCount(row, column, bombs);
 
         // Попали на бомбу?
-        if (isBomb(row, column)) {
+        if (isBomb(row, column, bombs)) {
 
             // Показываем все бомбы на поле
             for (let i = 0; i < 16; i++) {
@@ -191,59 +183,69 @@ function startGame() {
             return;
         }
     }
+}
 
-    // Считает количество бомб вокруг ячейки
-    function getCount(row, column) {
-        let count = 0;
-        for (let i = -1; i <= 1; i++) {
-            for (let j = -1; j <= 1; j++) {
-                if (isBomb(row + j, column + i)) {
-                    count++;
-                }
+// !!! Функции, которые не должны быть в startGame()
+
+// Не позволяет уйти за границы игрового поля
+function isValid(row, column) {
+    return row >= 0
+        && row < height
+        && column >= 0
+        && column < width;
+}
+
+// Проверка на наличие бомбы в ячейке
+function isBomb(row, column, bombs) {
+    if (!isValid(row, column)) return false;
+
+    const index = row * width + column;
+    return bombs.includes(index);
+}
+
+// Считает количество бомб вокруг ячейки
+function getCount(row, column, bombs) {
+    let count = 0;
+    for (let i = -1; i <= 1; i++) {
+        for (let j = -1; j <= 1; j++) {
+            if (isBomb(row + j, column + i, bombs)) {
+                count++;
             }
         }
-        return count;
+    }
+    return count;
+}
+
+// Находит картинку на спрайте соответствующую количеству бомб вокруг
+function showMinesCount(count) {
+    let res ='';
+
+    switch(count) {
+        case 1:
+            res = 'url(../img/one_cell.png)'
+            break;
+        case 2:
+            res = 'url(../img/two_cell.png)'
+            break;
+        case 3:
+            res = 'url(../img/three_cell.png)'
+            break;
+        case 4:
+            res = 'url(../img/four_cell.png)'
+            break;
+        case 5:
+            res = 'url(../img/five_cell.png)'
+            break;
+        case 6:
+            res = 'url(../img/six_cell.png)'
+            break;
+        case 7:
+            res = 'url(../img/seven_cell.png)'
+            break;
+        case 8:
+            res = 'url(../img/eight_cell.png)'
+            break;  
     }
 
-    // Находит картинку на спрайте соответствующую количеству бомб вокруг
-    function showMinesCount(count) {
-        let res ='';
-
-        switch(count) {
-            case 1:
-                res = 'url(../img/one_cell.png)'
-                break;
-            case 2:
-                res = 'url(../img/two_cell.png)'
-                break;
-            case 3:
-                res = 'url(../img/three_cell.png)'
-                break;
-            case 4:
-                res = 'url(../img/four_cell.png)'
-                break;
-            case 5:
-                res = 'url(../img/five_cell.png)'
-                break;
-            case 6:
-                res = 'url(../img/six_cell.png)'
-                break;
-            case 7:
-                res = 'url(../img/seven_cell.png)'
-                break;
-            case 8:
-                res = 'url(../img/eight_cell.png)'
-                break;  
-        }
-
-        return res;
-    }
-
-    // Не позволяет уйти за границы игрового поля
-    function isValid(row, column) {
-        return row >= 0
-            && row < height
-            && column >= 0
-            && column < width;
-    }
+    return res;
 }
