@@ -1,6 +1,9 @@
-import rightClick from "./rightClickLogic.js";
-import { isFlag } from "./rightClickLogic.js";
+import rightClick from "./rightClick.js";
+import { isFlag } from "./rightClick.js";
 import timeCounter from "./timeCounter.js";
+import isValid from "./isValid.js";
+import showMinesCount from "./showMinesCount.js";
+import isBomb from "./isBomb.js";
 
 
 // Исходные данные
@@ -57,6 +60,7 @@ function startGame() {
         // При клике на кнопку
         if (isFirstClick) {
             timeCounter();
+            open(row, column, cells, bombs, openedCount, isFirstClick);
             isFirstClick = false;
         }
         open(row, column, cells, bombs, openedCount, isFirstClick);
@@ -96,28 +100,12 @@ function startGame() {
 
 // !!! Функции, которые не должны быть в startGame()
 
-// Не позволяет уйти за границы игрового поля
-function isValid(row, column) {
-    return row >= 0
-        && row < height
-        && column >= 0
-        && column < width;
-}
-
-// Проверка на наличие бомбы в ячейке
-function isBomb(row, column, bombs) {
-    if (!isValid(row, column)) return false;
-
-    const index = row * width + column;
-    return bombs.includes(index);
-}
-
 // Считает количество бомб вокруг ячейки
 function getCount(row, column, bombs) {
     let count = 0;
     for (let i = -1; i <= 1; i++) {
         for (let j = -1; j <= 1; j++) {
-            if (isBomb(row + j, column + i, bombs)) {
+            if (isBomb(row + j, column + i, bombs, height, width)) {
                 count++;
             }
         }
@@ -125,51 +113,17 @@ function getCount(row, column, bombs) {
     return count;
 }
 
-// Находит картинку на спрайте соответствующую количеству бомб вокруг
-function showMinesCount(count) {
-    let res ='';
-
-    switch(count) {
-        case 1:
-            res = 'url(../img/one_cell.png)'
-            break;
-        case 2:
-            res = 'url(../img/two_cell.png)'
-            break;
-        case 3:
-            res = 'url(../img/three_cell.png)'
-            break;
-        case 4:
-            res = 'url(../img/four_cell.png)'
-            break;
-        case 5:
-            res = 'url(../img/five_cell.png)'
-            break;
-        case 6:
-            res = 'url(../img/six_cell.png)'
-            break;
-        case 7:
-            res = 'url(../img/seven_cell.png)'
-            break;
-        case 8:
-            res = 'url(../img/eight_cell.png)'
-            break;  
-    }
-
-    return res;
-}
-
 // !!! WORK HERE!
 
 // Функция открытия ячейки
 function open(row, column, cells, bombs, openedCount, isFirstClick) {
-    if (!isValid(row, column)) return;
+    if (!isValid(row, column, height, width)) return;
 
     const index = row * width + column;
     let cell = cells[index];
 
     // Если это первый клик и попалась бомба
-    if (isBomb(row, column, bombs) && isFirstClick) {
+    if (isBomb(row, column, bombs, height, width) && isFirstClick) {
         let allowedIndexes = [...Array(256).keys()].filter(n => !bombs.includes(n));
         let myIndex = bombs.indexOf(index);
 
@@ -196,7 +150,7 @@ function open(row, column, cells, bombs, openedCount, isFirstClick) {
     // Победа, если была открыта последняя ячейка без бомбы
     openedCount--;
     
-    if (openedCount <= bombCount && !isBomb(row, column, bombs)) {
+    if (openedCount <= bombCount && !isBomb(row, column, bombs, height, width)) {
         smile.style.backgroundImage = 'url(../img/smile_win.png)';
         alert('Вы победили!');
     }
@@ -204,7 +158,7 @@ function open(row, column, cells, bombs, openedCount, isFirstClick) {
     const count = getCount(row, column, bombs);
 
     // Попали на бомбу?
-    if (isBomb(row, column, bombs)) {
+    if (isBomb(row, column, bombs, height, width)) {
 
         // Показываем все бомбы на поле
         for (let i = 0; i < 16; i++) {
