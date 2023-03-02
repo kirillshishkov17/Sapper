@@ -1,5 +1,4 @@
 import rightClick from "./rightClick.js";
-import timeCounter from "./timeCounter.js";
 import open from "./openCell.js";
 
 
@@ -60,7 +59,6 @@ function startGame() {
 
         // При клике на кнопку
         if (isFirstClick) {
-            timeCounter();
             open(row, column, height, width, cells, bombs, openedCount, isFirstClick, bombCount);
             isFirstClick = false;
             return;

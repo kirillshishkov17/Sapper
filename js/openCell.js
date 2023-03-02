@@ -12,8 +12,8 @@ function open(row, column, height, width, cells, bombs, openedCount, isFirstClic
 
     if (isFirstClick) {
         closedCell = openedCount;
+        timeCounter(bombCount);
     }
-    // console.log(closedCell); // !!! WORK HERE
 
     // Если это первый клик и попалась бомба
     if (isBomb(row, column, bombs, height, width) && isFirstClick) {
@@ -49,7 +49,6 @@ function open(row, column, height, width, cells, bombs, openedCount, isFirstClic
         for (let i = 0; i < cells.length; i++) {
             cells[i].disabled = true;
         }
-        // alert('Вы победили!');
     }
 
     const count = getCount(row, column, bombs, height, width);
@@ -167,6 +166,90 @@ function getCount(row, column, bombs, height, width) {
         }
     }
     return count;
+}
+
+// Массив картинок с цифрами
+const nums = [
+    'img/0.png',
+    'img/1.png', 
+    'img/2.png', 
+    'img/3.png', 
+    'img/4.png', 
+    'img/5.png', 
+    'img/6.png', 
+    'img/7.png', 
+    'img/8.png', 
+    'img/9.png' 
+]
+
+
+
+// Логика секундомера
+function timeCounter(bombCount) {
+    const sec = document.querySelector('#sec3');
+    const secDecade = document.querySelector('#sec2');
+    const min = document.querySelector('#sec1');
+    let secCount = 1;
+    let secDecadeCount = 1;
+    let minCount = 1;
+
+    const secondNum = setInterval(() => {
+
+        if (secCount > 9) {
+            secCount = 0; 
+        }
+
+        if (closedCell <= bombCount) {
+            clearInterval(secondNum);
+            return;
+        }
+
+        sec.src = nums[secCount];
+        secCount++;
+    }, 1000);
+
+    const decadeNum =  setInterval(() => {
+        if (secDecadeCount > 9) {
+            secDecadeCount = 0; 
+        }
+
+        if (closedCell <= bombCount) {
+            clearInterval(decadeNum);
+            return;
+        }
+
+        secDecade.src = nums[secDecadeCount];
+        secDecadeCount++;
+    }, 10000);
+
+    const hudredNum =  setInterval(() => {
+        if (minCount > 9) {
+            minCount = 0; 
+        }
+
+        if (closedCell <= bombCount) {
+            clearInterval(hudredNum);
+        }
+
+        min.src = nums[minCount];
+        minCount++;
+    }, 100000);
+
+
+
+    // Обнуление таймера при старте новой игры
+    const smile = document.querySelector('.smile');
+    smile.addEventListener('click', () => {
+        // secCount = 1;
+        // secDecadeCount = 1;
+        // minCount = 1;
+        // clearInterval(secondNum);
+        // clearInterval(decadeNum);
+        // clearInterval(hudredNum);
+        sec.src = 'img/0.png';
+        secDecade.src = 'img/0.png';
+        min.src = 'img/0.png';
+    })
 }
 
 export default open;
