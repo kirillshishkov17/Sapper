@@ -7,7 +7,8 @@
 button {
     height: 16px;
     font-size: 10px;
-    background-image: url(../img/closed_cell.png);
+    background-image: url(../img/sprites.png);
+    background-position: 0px -51px;
     border: none;
     cursor: pointer;
 }
@@ -38,7 +39,8 @@ button {
 .smile {
     width: 26px;
     height: 26px;
-    background-image: url('../img/smile.png');
+    background-image: url(../img/sprites.png);
+    background-position: 0px -24.2px;
 }
 
 /*Секундомер*/
@@ -56,14 +58,3 @@ button {
 .bombCounter {
     display: flex;
 }
-
-/* div .test{
-    background: url(../img/bomb.png) content-box no-repeat;
-    background: url(../img/zero_cell.png) content-box no-repeat;
-    background: url(../img/one_cell.png) content-box no-repeat;
-    background: url(../img/two_cell.png) content-box no-repeat;
-    background: url(../img/three_cell.png) content-box no-repeat;
-    background: url(../img/four_cell.png) content-box no-repeat;
-    background: url(../img/five_cell.png) content-box no-repeat;
-
-} */

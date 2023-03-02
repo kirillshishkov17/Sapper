@@ -5,7 +5,6 @@ let flagsArray = [];
 let questionMarkArray = [];
 
 const rightClick = (index, cell, openedCount, bombCount, isNewGame) => {
-    
     if (isNewGame) {
         flagsArray = [];
         questionMarkArray = [];
@@ -50,20 +49,20 @@ const rightClick = (index, cell, openedCount, bombCount, isNewGame) => {
 // Отрисовывает флаг при ПКМ (Правая Кнопка Мыши)
 function flagMark(cell) {
     if (cell.disabled === true) return;
-    cell.style.backgroundImage = 'url(../img/flag.png)';
+    cell.style.backgroundPosition = '-34px -51px';
     // cell.disabled = false;
 }
 
 // Отрисовывает вопросительный знак при ПКМ
 function QuestionMark(cell) {
     if (cell.disabled === true) return;
-    cell.style.backgroundImage = 'url(../img/question_mark.png)';
+    cell.style.backgroundPosition = '-51px -51px';
 }
 
 // Отрисовывает закрытую ячейку при ПКМ
 function emptyMark(cell) {
     if (cell.disabled === true) return;
-    cell.style.backgroundImage = 'url(../img/closed_cell.png)';
+    cell.style.backgroundPosition = '0px -51px';
 }
 
 // Восстановление исходного количества флажков при начале новой игры

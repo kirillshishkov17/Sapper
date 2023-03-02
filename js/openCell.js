@@ -45,7 +45,7 @@ function open(row, column, height, width, cells, bombs, openedCount, isFirstClic
     closedCell--;
 
     if (closedCell <= bombCount && !isBomb(row, column, bombs, height, width)) {
-        smile.style.backgroundImage = 'url(../img/smile_win.png)';
+        smile.style.backgroundPosition = '-81px -24.2px'; //!!! Сюда победный смайл
         stopTimer = true;
         
         for (let i = 0; i < cells.length; i++) {
@@ -66,10 +66,10 @@ function open(row, column, height, width, cells, bombs, openedCount, isFirstClic
 
                 if (bombs.includes(index)) {
                     if (isFlag(index)) {
-                        cells[index].style.backgroundImage = 'url(../img/bomb_flag.png)';
+                        cells[index].style.backgroundPosition = '-119px -51px';
                         cells[index].disabled = true;
                     } else {
-                        cells[index].style.backgroundImage = 'url(../img/bomb.png)';
+                        cells[index].style.backgroundPosition = '54px -51px';
                         cells[index].disabled = true;
                     }
                 } else {
@@ -79,22 +79,22 @@ function open(row, column, height, width, cells, bombs, openedCount, isFirstClic
         }
 
         // Красным выделяем ту, на которую нажал пользователь
-        cell.style.backgroundImage = 'url(../img/bomb_red.png)';
+        cell.style.backgroundPosition = '-102px -51px';
 
         // Меняем смайлик при проигрыше
-        smile.style.backgroundImage = 'url(../img/smile_dead.png)';
+        smile.style.backgroundPosition = '-108px -24.2px';
 
         return;
     }
 
     if (count !== 0) {
-        cell.style.backgroundImage = showMinesCount(count);
+        cell.style.backgroundPosition = showMinesCount(count);
         isFirstClick = false;
         return;
     }
 
     if (count === 0) {
-        cell.style.backgroundImage = 'url(../img/zero_cell.png)';
+        cell.style.backgroundPosition = '-17px -51px';
         isFirstClick = false;
 
         for (let i = -1; i <= 1; i++) {
@@ -130,28 +130,36 @@ function showMinesCount(count) {
 
     switch(count) {
         case 1:
-            res = 'url(/img/one_cell.png)'
+            // res = 'url(/img/one_cell.png)'
+            res = '0px -68px';
             break;
         case 2:
-            res = 'url(/img/two_cell.png)'
+            // res = 'url(/img/two_cell.png)'
+            res = '-17px -68px';
             break;
         case 3:
-            res = 'url(/img/three_cell.png)'
+            // res = 'url(/img/three_cell.png)'
+            res = '-34px -68px';
             break;
         case 4:
-            res = 'url(/img/four_cell.png)'
+            // res = 'url(/img/four_cell.png)'
+            res = '-51px -68px';
             break;
         case 5:
-            res = 'url(/img/five_cell.png)'
+            // res = 'url(/img/five_cell.png)'
+            res = '-68px -68px;';
             break;
         case 6:
-            res = 'url(/img/six_cell.png)'
+            // res = 'url(/img/six_cell.png)'
+            res = '-85px -68px';
             break;
         case 7:
-            res = 'url(/img/seven_cell.png)'
+            // res = 'url(/img/seven_cell.png)'
+            res = '-102px -68px';
             break;
         case 8:
-            res = 'url(/img/eight_cell.png)'
+            // res = 'url(/img/eight_cell.png)'
+            res = '-119px -68px';
             break;  
     }
 

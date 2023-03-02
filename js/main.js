@@ -24,12 +24,12 @@ startGame();
 // Перезапускает новую игру при клике на смайлик
 const smile = document.querySelector('.smile');
 smile.addEventListener('mouseup', () => {
-    smile.style.backgroundImage = 'url(/img/smile.png)';
+    smile.style.backgroundPosition = '0px -24.2px';
     startNewGame();
 }) 
 
 smile.addEventListener('mousedown', () => {
-    smile.style.backgroundImage = 'url(/img/smile_press.png)';
+    smile.style.backgroundPosition = '-27.5px -24.2px';
 })
 
 // Функция старта игры
@@ -65,12 +65,12 @@ function startGame() {
     // Обработчики изменяющие смайл на время клика по закрытой ячейке
     field.addEventListener('mousedown', (event) => {
         if (openedCount <= bombCount) return;
-        smile.style.backgroundImage = 'url(/img/smile_fear.png)'
+        smile.style.backgroundPosition = '85px -24.2px';
     })
 
     field.addEventListener('mouseup', () => {
         if (openedCount <= bombCount) return;
-        smile.style.backgroundImage = 'url(/img/smile.png)'
+        smile.style.backgroundPosition = '0px -24.2px';
     })
 
     // Обработчик событий при клике (ПКМ) на кнопку
@@ -99,7 +99,7 @@ function startNewGame() {
     const cells = [...field.children];
     cells.forEach(cell => {
         cell.disabled = false;
-        cell.style.backgroundImage = 'url(/img/closed_cell.png)';
+        cell.style.backgroundPosition = '0px -51px';
     });
 
     bombs = [...Array(256).keys()]
@@ -110,5 +110,5 @@ function startNewGame() {
     rightClick(0, 0, 0, 0, isNewGame);
     isNewGame = false;
     isFirstClick = true;
-    bombCount = startBombCount; // !!! При изменении количества бомб изменить и этот параметр
+    bombCount = startBombCount;
 }
