@@ -4,7 +4,13 @@ let flagsCount = 40; // Зависит от количества бомб
 let flagsArray = [];
 let questionMarkArray = [];
 
-const rightClick = (index, cell, openedCount, bombCount) => {
+const rightClick = (index, cell, openedCount, bombCount, isNewGame) => {
+    
+    if (isNewGame) {
+        flagsArray = [];
+        questionMarkArray = [];
+    }
+
     if (openedCount <= bombCount) return;
 
     if (questionMarkArray.includes(index)) {
@@ -24,14 +30,6 @@ const rightClick = (index, cell, openedCount, bombCount) => {
         flagsArray.push(index);
         flagMark(cell);
         minusBombCounter();
-
-        // Победа, если последним дейтсивем поставлен последний флаг
-        // if (openedCount <= bombCount && flagsCount <= 0) {
-        //     const smile = document.querySelector('.smile');
-        //     smile.style.backgroundImage = 'url(../img/smile_win.png)';
-        //     flagsCount = bombCount;
-        //     alert('WIN!!!');
-        // }
         return;
     }
 

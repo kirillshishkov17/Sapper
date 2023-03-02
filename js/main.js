@@ -8,6 +8,13 @@ const width = 16;                   // Количество ячеек по го
 const height = 16;                  // Количество ячеек по вертикали
 const cellsCount = width * height;  // Количество ячеек на поле
 const bombCount = 40;                // Количество бомб в игре
+let isNewGame = false;
+let isFirstClick = true;
+
+// Генерация бомб
+let bombs = [...Array(256).keys()]
+.sort(() => Math.random() - 0.5)
+.slice(0, bombCount);
 
 // Вызываем функцию старта игры
 startGame();
@@ -17,9 +24,7 @@ startGame();
 const smile = document.querySelector('.smile');
 smile.addEventListener('mouseup', () => {
     smile.style.backgroundImage = 'url(../img/smile.png)';
-    console.log('Work!'); // !!! Удалить после отладки
-
-    startGame();
+    startNewGame();
 }) 
 
 smile.addEventListener('mousedown', () => {
@@ -33,12 +38,11 @@ function startGame() {
     field.innerHTML = '<button></button>'.repeat(cellsCount)
     const cells = [...field.children];
     let openedCount = cellsCount;
-    let isFirstClick = true;
 
-    // Генерация бомб
-    let bombs = [...Array(256).keys()]
-        .sort(() => Math.random() - 0.5)
-        .slice(0, bombCount);
+    // // Генерация бомб
+    // let bombs = [...Array(256).keys()]
+    //     .sort(() => Math.random() - 0.5)
+    //     .slice(0, bombCount);
 
     // Обработчик события при клике (ЛКМ) на кнопку
     field.addEventListener('click', (event) => {
@@ -90,6 +94,28 @@ function startGame() {
 
         if (cell.disabled === true) return;
 
-        rightClick(index, cell, openedCount, bombCount);
+        rightClick(index, cell, openedCount, bombCount, isNewGame);
     })
+}
+
+function startNewGame() {
+    const field = document.querySelector('.field');
+    const cells = [...field.children];
+    cells.forEach(cell => {
+        cell.disabled = false;
+        cell.style.backgroundImage = 'url(../img/closed_cell.png)';
+    });
+
+    bombs = [...Array(256).keys()]
+        .sort(() => Math.random() - 0.5)
+        .slice(0, bombCount);
+
+    isNewGame = true;
+    rightClick(0, 0, 0, 0, isNewGame);
+    isNewGame = false;
+    isFirstClick = true
+
+
+    // let openedCount = cellsCount;
+    // let isFirstClick = true;
 }
