@@ -1,5 +1,5 @@
 import rightClick from "./rightClickLogic.js";
-import { flagsCount, isFlag } from "./rightClickLogic.js";
+import { isFlag } from "./rightClickLogic.js";
 import timeCounter from "./timeCounter.js";
 
 
@@ -8,11 +8,7 @@ const width = 16;                   // Количество ячеек по го
 const height = 16;                  // Количество ячеек по вертикали
 const cellsCount = width * height;  // Количество ячеек на поле
 const bombCount = 40;                // Количество бомб в игре
-let play = true;                    // Игра запускается при загрузке страницы, когда на
-
-// Добавление счётчика оставшихся бомб
-// const bombCounter = document.querySelector('.bombCounter');
-// bombCounter.innerHTML = bombCount;
+let play = true;                    // Игра запускается при загрузке страницы, когда н
 
 // Вызываем функцию старта игры
 startGame();
@@ -38,15 +34,17 @@ function startGame() {
     field.innerHTML = '<button></button>'.repeat(cellsCount)
     const cells = [...field.children];
     let openedCount = cellsCount;
+    let isFirstClick = true;
 
     // Генерация бомб
     let bombs = [...Array(256).keys()]
         .sort(() => Math.random() - 0.5)
         .slice(0, bombCount);
-        console.log(bombs);
 
     // Обработчик события при клике (ЛКМ) на кнопку
     field.addEventListener('click', (event) => {
+        if (openedCount <= bombCount) return;
+
         const index = cells.indexOf(event.target);
         const column = index % width;
         const row = Math.floor(index / width);
@@ -57,16 +55,20 @@ function startGame() {
         }
 
         // При клике на кнопку
+        if (isFirstClick === true) {
+            timeCounter();
+        }
         open(row, column);
-        timeCounter();
     })
 
     // Обработчики изменяющие смайл на время клика по закрытой ячейке
     field.addEventListener('mousedown', (event) => {
+        if (openedCount <= bombCount) return;
         smile.style.backgroundImage = 'url(../img/smile_fear.png)'
     })
 
     field.addEventListener('mouseup', () => {
+        if (openedCount <= bombCount) return;
         smile.style.backgroundImage = 'url(../img/smile.png)'
     })
 
@@ -98,8 +100,6 @@ function startGame() {
         return bombs.includes(index);
     }
 
-    let isFirstClick = true; // !!! Работаю тут
-
     // Функция открытия ячейки
     function open(row, column) {
         if (!isValid(row, column)) return;
@@ -110,17 +110,14 @@ function startGame() {
         // Если это первый клик и попалась бомба
         if (isBomb(row, column) && isFirstClick) {
             let allowedIndexes = [...Array(256).keys()].filter(n => !bombs.includes(n));
-            // console.log('Разрешённые индексы' + allowedIndexes); // !!! Удалить после
             let myIndex = bombs.indexOf(index);
-            console.log('Старый индекс' + index);
+
             if (myIndex !== -1) {
                 bombs.splice(myIndex, 1);
                 let item = allowedIndexes[Math.floor(Math.random()*allowedIndexes.length)];
-                console.log('Новый индекс ' + item);
                 bombs.push(item);
             }
 
-            console.log(bombs);
             isFirstClick = false;
             open(row, column);
             return;
@@ -135,10 +132,10 @@ function startGame() {
             cell.disabled = true;
         }
 
-        // Победа, если последней ячейкой была открыта ячейка без бомбы, а флаги уже расставлены
+        // Победа, если была открыта последняя ячейка без бомбы
         openedCount--;
         
-        if (openedCount <= bombCount && flagsCount <= 0) {
+        if (openedCount <= bombCount && !isBomb(row, column)) {
             smile.style.backgroundImage = 'url(../img/smile_win.png)';
             alert('Вы победили!');
         }

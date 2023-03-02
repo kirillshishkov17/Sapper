@@ -5,6 +5,7 @@ let flagsArray = [];
 let questionMarkArray = [];
 
 const rightClick = (index, cell, openedCount, bombCount) => {
+    if (openedCount <= bombCount) return;
 
     if (questionMarkArray.includes(index)) {
         let deleteQuestionMarkIndex = questionMarkArray.indexOf(index);
@@ -25,12 +26,12 @@ const rightClick = (index, cell, openedCount, bombCount) => {
         minusBombCounter();
 
         // Победа, если последним дейтсивем поставлен последний флаг
-        if (openedCount <= bombCount && flagsCount <= 0) {
-            const smile = document.querySelector('.smile');
-            smile.style.backgroundImage = 'url(../img/smile_win.png)';
-            flagsCount = bombCount;
-            alert('WIN!!!');
-        }
+        // if (openedCount <= bombCount && flagsCount <= 0) {
+        //     const smile = document.querySelector('.smile');
+        //     smile.style.backgroundImage = 'url(../img/smile_win.png)';
+        //     flagsCount = bombCount;
+        //     alert('WIN!!!');
+        // }
         return;
     }
 
@@ -78,4 +79,4 @@ function isFlag(index) {
 }
 
 export default rightClick;
-export { flagsCount, isFlag };
+export { isFlag };
