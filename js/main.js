@@ -6,7 +6,7 @@ import open from "./openCell.js";
 const width = 16;                   // Количество ячеек по горизонатли
 const height = 16;                  // Количество ячеек по вертикали
 const cellsCount = width * height;  // Количество ячеек на поле
-let bombCount = 2;                // Количество бомб в игре
+let bombCount = 4;                // Количество бомб в игре
 let isNewGame = false;
 let isFirstClick = true;
 let openedCount = cellsCount;
@@ -115,7 +115,7 @@ function startNewGame() {
     rightClick(0, 0, 0, 0, isNewGame);
     isNewGame = false;
     isFirstClick = true;
-    bombCount = 2; // !!! Изменить тут на 40 в конце
+    bombCount = 4; // !!! При изменении количества бомб изменить и этот параметр
 
 
     // let openedCount = cellsCount;

@@ -1,6 +1,7 @@
 import { isFlag } from "./rightClick.js";
 
-let closedCell = 256;
+let closedCell = 256; // Всего ячеек на игровом поле
+let stopTimer = false; // Меняется, если попали на бомбу
 
 // Функция открытия ячейки
 function open(row, column, height, width, cells, bombs, openedCount, isFirstClick, bombCount) {
@@ -12,7 +13,7 @@ function open(row, column, height, width, cells, bombs, openedCount, isFirstClic
 
     if (isFirstClick) {
         closedCell = openedCount;
-        timeCounter(bombCount);
+        timeCounter();
     }
 
     // Если это первый клик и попалась бомба
@@ -45,6 +46,7 @@ function open(row, column, height, width, cells, bombs, openedCount, isFirstClic
 
     if (closedCell <= bombCount && !isBomb(row, column, bombs, height, width)) {
         smile.style.backgroundImage = 'url(../img/smile_win.png)';
+        stopTimer = true;
         
         for (let i = 0; i < cells.length; i++) {
             cells[i].disabled = true;
@@ -55,6 +57,7 @@ function open(row, column, height, width, cells, bombs, openedCount, isFirstClic
 
     // Попали на бомбу?
     if (isBomb(row, column, bombs, height, width)) {
+        stopTimer = true;
 
         // Показываем все бомбы на поле
         for (let i = 0; i < 16; i++) {
@@ -185,7 +188,7 @@ const nums = [
 
 
 // Логика секундомера
-function timeCounter(bombCount) {
+function timeCounter() {
     const sec = document.querySelector('#sec3');
     const secDecade = document.querySelector('#sec2');
     const min = document.querySelector('#sec1');
@@ -199,7 +202,7 @@ function timeCounter(bombCount) {
             secCount = 0; 
         }
 
-        if (closedCell <= bombCount) {
+        if (stopTimer) {
             clearInterval(secondNum);
             return;
         }
@@ -213,7 +216,7 @@ function timeCounter(bombCount) {
             secDecadeCount = 0; 
         }
 
-        if (closedCell <= bombCount) {
+        if (stopTimer) {
             clearInterval(decadeNum);
             return;
         }
@@ -222,13 +225,13 @@ function timeCounter(bombCount) {
         secDecadeCount++;
     }, 10000);
 
-    const hudredNum =  setInterval(() => {
+    const hundredNum =  setInterval(() => {
         if (minCount > 9) {
             minCount = 0; 
         }
 
-        if (closedCell <= bombCount) {
-            clearInterval(hudredNum);
+        if (stopTimer) {
+            clearInterval(hundredNum);
         }
 
         min.src = nums[minCount];
@@ -240,15 +243,13 @@ function timeCounter(bombCount) {
     // Обнуление таймера при старте новой игры
     const smile = document.querySelector('.smile');
     smile.addEventListener('click', () => {
-        // secCount = 1;
-        // secDecadeCount = 1;
-        // minCount = 1;
-        // clearInterval(secondNum);
-        // clearInterval(decadeNum);
-        // clearInterval(hudredNum);
+        clearInterval(secondNum);
+        clearInterval(decadeNum);
+        clearInterval(hundredNum);
         sec.src = 'img/0.png';
         secDecade.src = 'img/0.png';
         min.src = 'img/0.png';
+        stopTimer = false;
     })
 }
 
