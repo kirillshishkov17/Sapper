@@ -1,3 +1,18 @@
+.container {
+    display: grid;
+    grid-row-gap: 9.5px;
+    justify-content: center;
+    background-image: url(../img/minesweeper.png);
+    background-repeat: no-repeat;
+    background-position: center 5px;
+    background-size: 51.2%;
+    transform: scale(1.9);
+    width: 500px;
+    padding: 19px;
+    margin: auto;
+    margin-top: 250px;
+}
+
 .field {
     display: grid;
     grid-template-columns: repeat(16, 16px);
@@ -11,22 +26,6 @@ button {
     background-position: 0px -51px;
     border: none;
     cursor: pointer;
-}
-
-.container {
-    display: grid;
-    grid-row-gap: 9.5px;
-    justify-content: center;
-    background-image: url(../img/minesweeper.png);
-    background-repeat: no-repeat;
-    background-position: center 5px;
-    background-size: 51.2%;
-    width: 500px;
-    padding: 19px;
-
-    transform: scale(1.9);
-    margin: auto;
-    margin-top: 250px;
 }
 
 .menu {
@@ -57,4 +56,21 @@ button {
 /*Счётчик бомб*/
 .bombCounter {
     display: flex;
+}
+
+@media screen and (max-width: 960px) {
+    html, body {
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        overflow: hidden;
+    }
+
+    .container {
+        position: relative;
+        left: -75px;
+        top: 150px;
+        transform: scale(1.2);
+        margin: auto;
+    }
 }

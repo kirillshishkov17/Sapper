@@ -6,7 +6,7 @@ import open from "./openCell.js";
 const width = 16;                   // Количество ячеек по горизонатли
 const height = 16;                  // Количество ячеек по вертикали
 const cellsCount = width * height;  // Количество ячеек на поле
-let startBombCount = 40;             // Количество бомб в игре
+let startBombCount = 40;            // Количество бомб в игре
 let isNewGame = false;
 let isFirstClick = true;
 let openedCount = cellsCount;
@@ -21,7 +21,7 @@ let bombs = [...Array(256).keys()]
 startGame();
 
 
-// Перезапускает новую игру при клике на смайлик
+// Перезапускает игру при клике по смайлику
 const smile = document.querySelector('.smile');
 smile.addEventListener('mouseup', () => {
     smile.style.backgroundPosition = '0px -24.2px';
@@ -39,7 +39,7 @@ function startGame() {
     field.innerHTML = '<button></button>'.repeat(cellsCount)
     const cells = [...field.children];
 
-    // Обработчик события при клике (ЛКМ) на кнопку
+    // Обработчик события при клике (ЛКМ) по ячейке
     field.addEventListener('click', (event) => {
         if (openedCount <= bombCount) return;
 
@@ -52,7 +52,7 @@ function startGame() {
             return;
         }
 
-        // При клике на кнопку
+        // При клике по ячейке
         if (isFirstClick) {
             open(row, column, height, width, cells, bombs, openedCount, isFirstClick, bombCount);
             isFirstClick = false;
@@ -73,7 +73,7 @@ function startGame() {
         smile.style.backgroundPosition = '0px -24.2px';
     })
 
-    // Обработчик событий при клике (ПКМ) на кнопку
+    // Обработчик событий при клике (ПКМ) по ячейке
     field.addEventListener('contextmenu', (event) => {
         const index = cells.indexOf(event.target);
         let cell = cells[index];
@@ -97,6 +97,7 @@ function startGame() {
 function startNewGame() {
     const field = document.querySelector('.field');
     const cells = [...field.children];
+    
     cells.forEach(cell => {
         cell.disabled = false;
         cell.style.backgroundPosition = '0px -51px';

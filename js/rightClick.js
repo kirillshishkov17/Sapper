@@ -46,19 +46,19 @@ const rightClick = (index, cell, openedCount, bombCount, isNewGame) => {
     }
 }
 
-// Отрисовывает флаг при ПКМ (Правая Кнопка Мыши)
+// Отрисовывает флаг при клике ПКМ (Правая Кнопка Мыши)
 function flagMark(cell) {
     if (cell.disabled === true) return;
     cell.style.backgroundPosition = '-34px -51px';
 }
 
-// Отрисовывает вопросительный знак при ПКМ
+// Отрисовывает вопросительный знак при клике ПКМ
 function QuestionMark(cell) {
     if (cell.disabled === true) return;
     cell.style.backgroundPosition = '-51px -51px';
 }
 
-// Отрисовывает закрытую ячейку при ПКМ
+// Отрисовывает закрытую ячейку при клике ПКМ
 function emptyMark(cell) {
     if (cell.disabled === true) return;
     cell.style.backgroundPosition = '0px -51px';

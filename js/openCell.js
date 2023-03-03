@@ -1,7 +1,7 @@
 import { isFlag } from "./rightClick.js";
 
 let closedCell = 256;   // Всего ячеек на игровом поле
-let stopTimer = false;  // Меняется, если попали на бомбу
+let stopTimer = false;  // Изменяется при победе или поражении
 
 // Функция открытия ячейки
 function open(row, column, height, width, cells, bombs, openedCount, isFirstClick, bombCount) {
@@ -78,7 +78,7 @@ function open(row, column, height, width, cells, bombs, openedCount, isFirstClic
             }
         }
 
-        // Красным выделяем ту бомбу, на которую нажал пользователь
+        // Красным выделяем ту бомбу, на которую попал пользователь
         cell.style.backgroundPosition = '-102px -51px';
 
         // Меняем смайлик при проигрыше
@@ -132,7 +132,7 @@ function isBomb(row, column, bombs, height, width) {
     return bombs.includes(index);
 }
 
-// Находит картинку на спрайте соответствующую количеству бомб вокруг
+// Находит картинку на спрайте соответствующую количеству бомб вокруг ячейки
 function showMinesCount(count) {
     let res ='';
 
@@ -169,6 +169,7 @@ function showMinesCount(count) {
 // Считает количество бомб вокруг ячейки
 function getCount(row, column, bombs, height, width) {
     let count = 0;
+    
     for (let i = -1; i <= 1; i++) {
         for (let j = -1; j <= 1; j++) {
             if (isBomb(row + j, column + i, bombs, height, width)) {
