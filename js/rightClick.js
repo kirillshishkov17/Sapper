@@ -50,7 +50,6 @@ const rightClick = (index, cell, openedCount, bombCount, isNewGame) => {
 function flagMark(cell) {
     if (cell.disabled === true) return;
     cell.style.backgroundPosition = '-34px -51px';
-    // cell.disabled = false;
 }
 
 // Отрисовывает вопросительный знак при ПКМ

@@ -45,7 +45,7 @@ function open(row, column, height, width, cells, bombs, openedCount, isFirstClic
     closedCell--;
 
     if (closedCell <= bombCount && !isBomb(row, column, bombs, height, width)) {
-        smile.style.backgroundPosition = '-81px -24.2px'; //!!! Сюда победный смайл
+        smile.style.backgroundPosition = '-81px -24.2px';
         stopTimer = true;
         
         for (let i = 0; i < cells.length; i++) {
@@ -78,12 +78,20 @@ function open(row, column, height, width, cells, bombs, openedCount, isFirstClic
             }
         }
 
-        // Красным выделяем ту, на которую нажал пользователь
+        // Красным выделяем ту бомбу, на которую нажал пользователь
         cell.style.backgroundPosition = '-102px -51px';
 
         // Меняем смайлик при проигрыше
         smile.style.backgroundPosition = '-108px -24.2px';
 
+        return;
+    }
+
+    if (count === 5) {
+        cell.disabled = false;
+        cell.style.backgroundPosition = '-68px -68px';
+        isFirstClick = false;
+        cell.disabled = true;
         return;
     }
 
@@ -130,35 +138,27 @@ function showMinesCount(count) {
 
     switch(count) {
         case 1:
-            // res = 'url(/img/one_cell.png)'
             res = '0px -68px';
             break;
         case 2:
-            // res = 'url(/img/two_cell.png)'
             res = '-17px -68px';
             break;
         case 3:
-            // res = 'url(/img/three_cell.png)'
             res = '-34px -68px';
             break;
         case 4:
-            // res = 'url(/img/four_cell.png)'
             res = '-51px -68px';
             break;
         case 5:
-            // res = 'url(/img/five_cell.png)'
             res = '-68px -68px;';
             break;
         case 6:
-            // res = 'url(/img/six_cell.png)'
             res = '-85px -68px';
             break;
         case 7:
-            // res = 'url(/img/seven_cell.png)'
             res = '-102px -68px';
             break;
         case 8:
-            // res = 'url(/img/eight_cell.png)'
             res = '-119px -68px';
             break;  
     }
@@ -240,6 +240,7 @@ function timeCounter() {
 
         if (stopTimer) {
             clearInterval(hundredNum);
+            return;
         }
 
         min.src = nums[minCount];
